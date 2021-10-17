@@ -3,13 +3,13 @@
         <div class="bg-banner" />
         <div id="login-box">
             <div class="login-banner" />
-            <el-form v-show="formType == 'login'" ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+            <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
                 <div class="title-container">
                     <h3 class="title">{{ title }}管理后台</h3>
                 </div>
                 <div>
-                    <el-form-item prop="account">
-                        <el-input ref="name" v-model="loginForm.account" placeholder="用户名" type="text" tabindex="1" autocomplete="on">
+                    <el-form-item prop="username">
+                        <el-input ref="name" v-model="loginForm.username" placeholder="用户名" type="text" tabindex="1" autocomplete="on">
                             <template #prefix>
                                 <svg-icon name="user" />
                             </template>
@@ -28,56 +28,8 @@
                 </div>
                 <div class="flex-bar">
                     <el-checkbox v-model="loginForm.remember">记住我</el-checkbox>
-                    <el-button type="text" @click="formType = 'reset'">忘记密码</el-button>
                 </div>
                 <el-button :loading="loading" type="primary" style="width: 100%;" @click.prevent="handleLogin">登 录</el-button>
-                <div style="margin-top: 20px; margin-bottom: -10px; color: #666; font-size: 14px; text-align: center; font-weight: bold;">
-                    <span style="margin-right: 5px;">演示帐号一键登录：</span>
-                    <el-button type="danger" size="mini" @click="testAccount('admin')">admin</el-button>
-                    <el-button type="danger" size="mini" plain @click="testAccount('test')">test</el-button>
-                </div>
-            </el-form>
-            <el-form v-show="formType == 'reset'" ref="resetForm" :model="resetForm" :rules="resetRules" class="login-form" auto-complete="on" label-position="left">
-                <div class="title-container">
-                    <h3 class="title">重置密码</h3>
-                </div>
-                <div>
-                    <el-form-item prop="account">
-                        <el-input ref="name" v-model="resetForm.account" placeholder="用户名" type="text" tabindex="1" autocomplete="on">
-                            <template #prefix>
-                                <svg-icon name="user" />
-                            </template>
-                        </el-input>
-                    </el-form-item>
-                    <el-form-item prop="captcha">
-                        <el-input ref="captcha" v-model="resetForm.captcha" placeholder="验证码" type="text" tabindex="2" autocomplete="on">
-                            <template #prefix>
-                                <svg-icon name="captcha" />
-                            </template>
-                            <template #append>
-                                <el-button>发送验证码</el-button>
-                            </template>
-                        </el-input>
-                    </el-form-item>
-                    <el-form-item prop="newPassword">
-                        <el-input ref="newPassword" v-model="resetForm.newPassword" :type="passwordType" placeholder="新密码" tabindex="3" autocomplete="on">
-                            <template #prefix>
-                                <svg-icon name="password" />
-                            </template>
-                            <template #suffix>
-                                <svg-icon :name="passwordType === 'password' ? 'eye' : 'eye-open'" @click="showPassword" />
-                            </template>
-                        </el-input>
-                    </el-form-item>
-                </div>
-                <el-row :gutter="15" style="padding-top: 20px;">
-                    <el-col :md="6">
-                        <el-button style="width: 100%;" @click="formType = 'login'">去登录</el-button>
-                    </el-col>
-                    <el-col :md="18">
-                        <el-button :loading="loading" type="primary" style="width: 100%;" @click.prevent="handleFind">确 认</el-button>
-                    </el-col>
-                </el-row>
             </el-form>
         </div>
         <Copyright v-if="$store.state.settings.showCopyright" />
@@ -85,42 +37,24 @@
 </template>
 
 <script>
+import { ElMessage } from 'element-plus'
 export default {
     name: 'Login',
     data() {
         return {
             title: import.meta.env.VITE_APP_TITLE,
             // 表单类型，login 登录，reset 重置密码
-            formType: 'login',
             loginForm: {
-                account: localStorage.login_account || '',
+                username: localStorage.remember_username || '',
                 password: '',
-                remember: !!localStorage.login_account
+                remember: !!localStorage.remember_username
             },
             loginRules: {
-                account: [
+                username: [
                     { required: true, trigger: 'blur', message: '请输入用户名' }
                 ],
                 password: [
-                    { required: true, trigger: 'blur', message: '请输入密码' },
-                    { min: 6, max: 18, trigger: 'blur', message: '密码长度为6到18位' }
-                ]
-            },
-            resetForm: {
-                account: localStorage.login_account || '',
-                captcha: '',
-                newPassword: ''
-            },
-            resetRules: {
-                account: [
-                    { required: true, trigger: 'blur', message: '请输入用户名' }
-                ],
-                captcha: [
-                    { required: true, trigger: 'blur', message: '请输入验证码' }
-                ],
-                newPassword: [
-                    { required: true, trigger: 'blur', message: '请输入新密码' },
-                    { min: 6, max: 18, trigger: 'blur', message: '密码长度为6到18位' }
+                    { required: true, trigger: 'blur', message: '请输入密码' }
                 ]
             },
             loading: false,
@@ -147,12 +81,17 @@ export default {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
                     this.loading = true
-                    this.$store.dispatch('user/login', this.loginForm).then(() => {
+                    this.$store.dispatch('admin/login', this.loginForm).then(res => {
                         this.loading = false
                         if (this.loginForm.remember) {
-                            localStorage.setItem('login_account', this.loginForm.account)
+                            localStorage.setItem('remember_username', this.loginForm.username)
                         } else {
-                            localStorage.removeItem('login_account')
+                            localStorage.removeItem('remember_username')
+                        }
+                        if (res.code == 1) {
+                            this.$router.push({ path: this.redirect || '/' })
+                        } else {
+                            ElMessage({ message: res.msg, type: 'error' })
                         }
                         this.$router.push({ path: this.redirect || '/' })
                     }).catch(() => {
@@ -160,22 +99,6 @@ export default {
                     })
                 }
             })
-        },
-        handleFind() {
-            this.$message({
-                message: '重置密码仅提供界面演示，无实际功能，需开发者自行扩展',
-                type: 'info'
-            })
-            this.$refs.resetForm.validate(valid => {
-                if (valid) {
-                    // 这里编写业务代码
-                }
-            })
-        },
-        testAccount(account) {
-            this.loginForm.account = account
-            this.loginForm.password = '123456'
-            this.handleLogin()
         }
     }
 }

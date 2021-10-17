@@ -15,7 +15,8 @@ export default {
             name: 'multilevelMenuExample1',
             component: () => import('@/views/multilevel_menu_example/page.vue'),
             meta: {
-                title: '导航1'
+                title: '导航1',
+                auth: ['demo']
             }
         },
         {

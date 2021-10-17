@@ -6,18 +6,18 @@ let globalSettings = {
      * 3、鉴权指令：v-auth、v-auth-all
      * 4、鉴权函数：this.$auth()、this.$authAll()
      */
-    enablePermission: false,
+    enablePermission: true,
     /**
      * 导航栏模式
      * side 侧边栏模式（含主导航）
      * head 顶部模式
      * single 侧边栏模式（无主导航）
      */
-    menuMode: 'side',
+    menuMode: 'single',
     // Element 组件默认尺寸，支持：large、medium、small、mini
     elementSize: 'large',
     // 是否开启侧边栏展开收起按钮
-    enableSidebarCollapse: false,
+    enableSidebarCollapse: true,
     // 侧边栏是否收起
     sidebarCollapse: false,
     // 切换侧边栏同时跳转页面
@@ -32,8 +32,8 @@ let globalSettings = {
     showCopyright: true,
     // 版权信息配置，格式为：Copyright © [dates] <company>, All Rights Reserved
     copyrightDates: '2020-2021',
-    copyrightCompany: 'Fantastic-admin',
-    copyrightWebsite: 'https://hooray.github.io/fantastic-admin',
+    copyrightCompany: '一梦千年系列',
+    copyrightWebsite: 'https://gitee.com/leruge/background-code',
     // 是否开启导航搜索
     enableNavSearch: true,
     // 是否开启移动端适配，开启后当页面宽度小于 992px 时自动切换为移动端展示
@@ -41,11 +41,11 @@ let globalSettings = {
     // 是否开启全屏
     enableFullscreen: false,
     // 是否开启页面刷新
-    enablePageReload: false,
+    enablePageReload: true,
     // 是否开启载入进度条
     enableProgress: true,
     // 是否开启动态标题
-    enableDynamicTitle: false,
+    enableDynamicTitle: true,
     // 是否开启控制台
     enableDashboard: true,
     // 控制台名称
@@ -53,7 +53,7 @@ let globalSettings = {
     // 是否开启后端返回路由数据
     enableBackendReturnRoute: false,
     // 是否开启主题配置（建议在生产环境关闭）
-    enableThemeSetting: true
+    enableThemeSetting: false
 }
 
 export default globalSettings

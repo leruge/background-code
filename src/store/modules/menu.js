@@ -149,7 +149,7 @@ const actions = {
             let accessedRoutes
             // 如果权限功能开启，则需要对路由数据进行筛选过滤
             if (rootState.settings.enablePermission) {
-                const permissions = await dispatch('user/getPermissions', null, { root: true })
+                const permissions = await dispatch('admin/getPermissions', null, { root: true })
                 accessedRoutes = filterAsyncRoutes(data.asyncRoutes, permissions)
             } else {
                 accessedRoutes = data.asyncRoutes

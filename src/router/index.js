@@ -91,7 +91,8 @@ const router = createRouter({
 router.beforeEach(async(to, from, next) => {
     store.state.settings.enableProgress && NProgress.start()
     // 已经登录，但还没根据权限动态生成并挂载路由
-    if (store.getters['user/isLogin'] && !store.state.menu.isGenerate) {
+
+    if (store.getters['admin/isLogin'] && !store.state.menu.isGenerate) {
         let accessRoutes = []
         if (!store.state.settings.enableBackendReturnRoute) {
             accessRoutes = await store.dispatch('menu/generateRoutesAtFront', {
@@ -115,7 +116,7 @@ router.beforeEach(async(to, from, next) => {
         if (store.state.menu.isGenerate && store.state.settings.menuMode !== 'single') {
             store.commit('menu/setHeaderActived', to.path)
         }
-        if (store.getters['user/isLogin']) {
+        if (store.getters['admin/isLogin']) {
             if (to.name) {
                 if (to.matched.length !== 0) {
                     // 如果已登录状态下，进入登录页会强制跳转到控制台页面

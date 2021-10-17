@@ -1,7 +1,7 @@
 import api from '@/api'
 
 const state = () => ({
-    account: localStorage.account || '',
+    username: localStorage.username || '',
     token: localStorage.token || '',
     failure_time: localStorage.failure_time || '',
     permissions: []
@@ -24,18 +24,18 @@ const actions = {
     login({ commit }, data) {
         return new Promise((resolve, reject) => {
             // 通过 mock 进行登录
-            api.post('member/login', data, {
-                baseURL: '/mock/'
-            }).then(res => {
-                commit('setUserData', res.data)
-                resolve()
+            api.post('admin/login', data).then(res => {
+                if (res.code === 1) {
+                    commit('setLogin', res.data)
+                }
+                resolve(res)
             }).catch(error => {
                 reject(error)
             })
         })
     },
     logout({ commit }) {
-        commit('removeUserData')
+        commit('setLogout')
         commit('menu/invalidRoutes', null, { root: true })
         commit('tabbar/clean', null, { root: true })
         commit('menu/removeRoutes', null, { root: true })
@@ -58,19 +58,19 @@ const actions = {
 }
 
 const mutations = {
-    setUserData(state, data) {
-        localStorage.setItem('account', data.account)
+    setLogin(state, data) {
+        localStorage.setItem('username', data.username)
         localStorage.setItem('token', data.token)
         localStorage.setItem('failure_time', data.failure_time)
-        state.account = data.account
+        state.username = data.username
         state.token = data.token
         state.failure_time = data.failure_time
     },
-    removeUserData(state) {
-        localStorage.removeItem('account')
+    setLogout(state) {
+        localStorage.removeItem('username')
         localStorage.removeItem('token')
         localStorage.removeItem('failure_time')
-        state.account = ''
+        state.username = ''
         state.token = ''
         state.failure_time = ''
     },
