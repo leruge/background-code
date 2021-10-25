@@ -1,10 +1,6 @@
 <template>
     <div class="user">
         <div class="tools">
-            <span v-if="$store.state.settings.mode == 'pc'" class="item item-pro" @click="pro">
-                <svg-icon name="pro" />
-                <span class="title">查看专业版</span>
-            </span>
             <span v-if="$store.state.settings.enableNavSearch" class="item" @click="$eventBus.emit('global-search-toggle')">
                 <svg-icon name="search" />
             </span>
@@ -23,7 +19,7 @@
                 <el-avatar size="medium">
                     <i class="el-icon-user-solid" />
                 </el-avatar>
-                {{ $store.state.user.account }}
+                {{ $store.state.admin.username }}
                 <i class="el-icon-caret-bottom" />
             </div>
             <template #dropdown>
@@ -77,16 +73,13 @@ function userCommand(command) {
             })
             break
         case 'logout':
-            store.dispatch('user/logout').then(() => {
+            store.dispatch('admin/logout').then(() => {
                 router.push({
                     name: 'login'
                 })
             })
             break
     }
-}
-function pro() {
-    window.open(`https://hooray.${location.origin.includes('gitee') ? 'gitee' : 'github'}.io/fantastic-admin/vue3/pro`, 'top')
 }
 </script>
 

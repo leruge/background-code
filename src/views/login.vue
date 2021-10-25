@@ -51,10 +51,10 @@ export default {
             },
             loginRules: {
                 username: [
-                    { required: true, trigger: 'blur', message: '请输入用户名' }
+                    { required: true, trigger: ['blur', 'change'], message: '请输入用户名' }
                 ],
                 password: [
-                    { required: true, trigger: 'blur', message: '请输入密码' }
+                    { required: true, trigger: ['blur', 'change'], message: '请输入密码' }
                 ]
             },
             loading: false,

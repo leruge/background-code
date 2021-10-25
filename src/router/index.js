@@ -30,22 +30,11 @@ const constantRoutes = [
             {
                 path: 'personal/setting',
                 name: 'personalSetting',
-                component: () => import('@/views/personal/setting.vue'),
+                component: () => import('@/views/admin/update_self.vue'),
                 meta: {
                     title: '个人设置',
                     breadcrumbNeste: [
                         { title: '个人设置', path: '/personal/setting' }
-                    ]
-                }
-            },
-            {
-                path: 'personal/edit/password',
-                name: 'personalEditPassword',
-                component: () => import('@/views/personal/edit.password.vue'),
-                meta: {
-                    title: '修改密码',
-                    breadcrumbNeste: [
-                        { title: '修改密码', path: '/personal/edit/password' }
                     ]
                 }
             },
@@ -58,19 +47,19 @@ const constantRoutes = [
     }
 ]
 
-import MultilevelMenuExample from './modules/multilevel.menu.example'
-import BreadcrumbExample from './modules/breadcrumb.example'
+import System from './modules/system'
+import Admin from './modules/admin'
 
 // 动态路由（异步路由、导航栏路由）
 const asyncRoutes = [
     {
         meta: {
-            title: '演示',
+            title: '单列',
             icon: 'sidebar-default'
         },
         children: [
-            MultilevelMenuExample,
-            BreadcrumbExample
+            System,
+            Admin
         ]
     }
 ]
@@ -91,7 +80,6 @@ const router = createRouter({
 router.beforeEach(async(to, from, next) => {
     store.state.settings.enableProgress && NProgress.start()
     // 已经登录，但还没根据权限动态生成并挂载路由
-
     if (store.getters['admin/isLogin'] && !store.state.menu.isGenerate) {
         let accessRoutes = []
         if (!store.state.settings.enableBackendReturnRoute) {

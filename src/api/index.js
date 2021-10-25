@@ -2,13 +2,16 @@ import axios from 'axios'
 // import Qs from 'qs'
 import router from '@/router/index'
 import { ElMessage } from 'element-plus'
+import store from '@/store'
 
 const toLogin = () => {
-    router.push({
-        path: '/login',
-        query: {
-            redirect: router.currentRoute.fullPath
-        }
+    store.dispatch('admin/logout').then(() => {
+        router.push({
+            path: '/login',
+            query: {
+                redirect: router.currentRoute.fullPath
+            }
+        })
     })
 }
 

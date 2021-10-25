@@ -37,19 +37,14 @@ const actions = {
     logout({ commit }) {
         commit('setLogout')
         commit('menu/invalidRoutes', null, { root: true })
-        commit('tabbar/clean', null, { root: true })
+        commit('keepAlive/clean', null, { root: true })
         commit('menu/removeRoutes', null, { root: true })
     },
     // 获取我的权限
-    getPermissions({ state, commit }) {
+    getPermissions({ commit }) {
         return new Promise(resolve => {
             // 通过 mock 获取权限
-            api.get('member/permission', {
-                baseURL: '/mock/',
-                params: {
-                    account: state.account
-                }
-            }).then(res => {
+            api.post('admin/lerugeGetRuleArray').then(res => {
                 commit('setPermissions', res.data.permissions)
                 resolve(res.data.permissions)
             })
