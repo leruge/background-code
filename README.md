@@ -7,7 +7,7 @@
 1. fantastic-admin
 
 ## 分支描述
-1. PHP是后端接口分支
+1. `https://gitee.com/leruge/backstage`是后台扩展
 1. vue是前端页面分支
 
 ## 联系方式
