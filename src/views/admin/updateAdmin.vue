@@ -1,5 +1,5 @@
 <template>
-    <div v-loading="state.skeleton">
+    <div v-loading="!state.isClick">
         <page-header title="更新管理员" />
         <page-main>
             <el-row>
@@ -35,7 +35,6 @@ let form = ref(null)
 let route = useRoute()
 let router = useRouter()
 let state = reactive({
-    skeleton: true,
     isClick: true,
     form: {
         id: '',
@@ -47,6 +46,7 @@ let state = reactive({
     groupList: []
 })
 onMounted(() => {
+    state.isClick = false
     getGroupList()
     getAdminInfo()
 })
@@ -87,7 +87,7 @@ let getAdminInfo = () => {
     state.form.id = route.query.adminId
     api.post('admin/lerugeGetAdminInfo', { id: state.form.id }).then(res => {
         if (res.code == 1) {
-            state.skeleton = false
+            state.isClick = true
             state.form = res.data.info
         } else {
             ElMessage.error({

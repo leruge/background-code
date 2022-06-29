@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="!state.isClick">
         <page-header title="权限列表" />
         <page-main>
             <el-button-group size="small">

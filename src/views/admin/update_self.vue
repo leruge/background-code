@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="!state.isClick">
         <page-header title="个人设置" content="每次更新都是需要重新登录哟~" />
         <page-main>
             <el-row>

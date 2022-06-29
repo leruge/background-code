@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="!state.isClick">
         <page-header title="APP信息" />
         <page-main>
             <el-row>
@@ -49,6 +49,7 @@ let state = reactive({
     isClick: true
 })
 onMounted(() => {
+    state.isClick = false
     api.post('admin/lerugeGetAppInfo').then(res => {
         if (res.code == 1) {
             state.form = res.data.appInfo

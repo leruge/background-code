@@ -1,5 +1,5 @@
 <template>
-    <div v-loading="state.skeleton">
+    <div v-loading="state.isClick">
         <page-header title="更新角色" />
         <page-main>
             <el-row>
@@ -31,7 +31,6 @@ let router = useRouter()
 let tree = ref(null)
 let form = ref(null)
 let state = reactive({
-    skeleton: true,
     isClick: true,
     form: {
         id: '',
@@ -49,6 +48,7 @@ let state = reactive({
     }
 })
 onMounted(() => {
+    state.isClick = false
     getRuleList()
     getGroupInfo()
 })
@@ -92,7 +92,7 @@ let getGroupInfo = () => {
     state.form.id = route.query.groupId
     api.post('admin/lerugeGetGroupInfo', { id: state.form.id }).then(res => {
         if (res.code == 1) {
-            state.skeleton = false
+            state.isClick = true
             state.form = res.data.info
             state.initSelectedIdArray = res.data.rule_array
         } else {

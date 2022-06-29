@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="!state.isClick">
         <page-header title="添加角色" />
         <page-main>
             <el-row>

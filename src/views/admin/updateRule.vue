@@ -1,5 +1,5 @@
 <template>
-    <div v-loading="state.skeleton">
+    <div v-loading="state.isClick">
         <page-header title="更新权限" />
         <page-main>
             <el-row>
@@ -35,7 +35,6 @@ let router = useRouter()
 let reload = inject('reload')
 let form = ref(null)
 let state = reactive({
-    skeleton: true,
     isClick: true,
     form: {
         id: '',
@@ -95,7 +94,7 @@ let getRuleInfo = () => {
     state.form.id = route.query.ruleId
     api.post('admin/lerugeGetRuleInfo', { id: state.form.id }).then(res => {
         if (res.code == 1) {
-            state.skeleton = false
+            state.isClick = true
             state.form = res.data.info
         } else {
             ElMessage.error({

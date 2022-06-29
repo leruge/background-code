@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="!state.isClick">
         <page-header title="管理员列表" />
         <page-main>
             <search-bar>
