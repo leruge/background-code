@@ -48,7 +48,6 @@ let state = reactive({
     }
 })
 onMounted(() => {
-    state.isClick = false
     getRuleList()
     getGroupInfo()
 })

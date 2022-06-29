@@ -51,6 +51,7 @@ let state = reactive({
 onMounted(() => {
     state.isClick = false
     api.post('admin/lerugeGetAppInfo').then(res => {
+        state.isClick = true
         if (res.code == 1) {
             state.form = res.data.appInfo
         }

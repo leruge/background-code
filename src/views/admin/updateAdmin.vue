@@ -46,7 +46,6 @@ let state = reactive({
     groupList: []
 })
 onMounted(() => {
-    state.isClick = false
     getGroupList()
     getAdminInfo()
 })
