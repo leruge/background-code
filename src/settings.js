@@ -31,7 +31,7 @@ let globalSettings = {
     // 是否显示底部版权信息，同时在路由 meta 对象里可以单独设置某个路由是否显示底部版权信息
     showCopyright: true,
     // 版权信息配置，格式为：Copyright © [dates] <company>, All Rights Reserved
-    copyrightDates: '2020-2021',
+    copyrightDates: '2020-2023',
     copyrightCompany: '一梦千年系列',
     copyrightWebsite: 'https://gitee.com/leruge/background-code',
     // 是否开启导航搜索

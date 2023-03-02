@@ -1,5 +1,5 @@
 <template>
-    <div v-loading="state.isClick">
+    <div v-loading="!state.isClick">
         <page-header title="更新权限" />
         <page-main>
             <el-row>
